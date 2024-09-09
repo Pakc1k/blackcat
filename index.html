@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Page</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #0c0c0c;
+            color: #d70e0e;
+        }
+        h1 {
+            text-align: center;
+            text-shadow: 0 0 10px #d70e0e;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #d70e0e;
+        }
+        label, input, button {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #d70e0e;
+            color: #d70e0e;
+            font-family: 'Courier New', monospace;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 5px #d70e0e;
+        }
+        button {
+            padding: 10px;
+            background-color: #d70e0e;
+            color: #0c0c0c;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #0c0c0c;
+            color: #d70e0e;
+            box-shadow: 0 0 10px #d70e0e;
+        }
+        .event-options {
+            margin-bottom: 15px;
+        }
+        .event-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .event-option input[type="radio"] {
+            margin-right: 10px;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d70e0e;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+        }
+        .event-option input[type="radio"]:checked {
+            background-color: #d70e0e;
+            box-shadow: 0 0 5px #d70e0e;
+        }
+        .event-option label {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>10.10 Reservation</h1>
+    <form action="https://formspree.io/f/meojdwoj" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Whatsapp Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <div class="event-options">
+            <label>Choose Event:</label>
+            <div class="event-option">
+                <input type="radio" id="event1" name="event" value="Event 1" required>
+                <label for="event1">Resonanz at Paradiso</label>
+            </div>
+            <div class="event-option">
+                <input type="radio" id="event2" name="event" value="Event 2">
+                <label for="event2">All+Sides at Boliche</label>
+            </div>
+            <div class="event-option">
+                <input type="radio" id="event3" name="event" value="Event 3">
+                <label for="event3">I am ALL IN Baby</label>
+            </div>
+            <div class="event-option">
+        </div>
+
+        <button type="submit">Submit RSVP</button>
+    </form>
+</body>
+</html>
