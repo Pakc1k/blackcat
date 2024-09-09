@@ -171,8 +171,18 @@
             requestAnimationFrame(animate);
 
             if (cat) {
-                cat.rotation.y += 0.01; // Rotate the cat
-                cat.position.x = Math.sin(Date.now() * 0.001) * 3; // Move the cat left and right
+                // Remove rotation
+                // cat.rotation.y += 0.01; // This line is removed
+
+                // Move the cat left and right
+                cat.position.x = Math.sin(Date.now() * 0.001) * 3;
+
+                // Flip the cat based on direction
+                if (Math.cos(Date.now() * 0.001) > 0) {
+                    cat.rotation.y = Math.PI / 2; // Face right
+                } else {
+                    cat.rotation.y = -Math.PI / 2; // Face left
+                }
             }
 
             renderer.render(scene, camera);
