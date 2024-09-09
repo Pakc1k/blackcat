@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP Page</title>
+    <title>RSVP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -14,11 +16,11 @@
             max-width: 600px;
             margin: 0 auto;
             background-color: #0c0c0c;
-            color: #d70e0e;
+            color: #ff3333;
         }
         h1 {
             text-align: center;
-            text-shadow: 0 0 10px #d70e0e;
+            text-shadow: 0 0 10px #ff3333;
         }
         form {
             display: flex;
@@ -26,7 +28,7 @@
             background-color: #1a1a1a;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px #d70e0e;
+            box-shadow: 0 0 10px #ff3333;
         }
         label, input, button {
             margin-bottom: 15px;
@@ -39,17 +41,17 @@
         input[type="tel"] {
             padding: 10px;
             background-color: #2a2a2a;
-            border: 1px solid #d70e0e;
-            color: #d70e0e;
+            border: 1px solid #ff3333;
+            color: #ff3333;
             font-family: 'Courier New', monospace;
         }
         input:focus {
             outline: none;
-            box-shadow: 0 0 5px #d70e0e;
+            box-shadow: 0 0 5px #ff3333;
         }
         button {
             padding: 10px;
-            background-color: #d70e0e;
+            background-color: #ff3333;
             color: #0c0c0c;
             border: none;
             cursor: pointer;
@@ -59,8 +61,8 @@
         }
         button:hover {
             background-color: #0c0c0c;
-            color: #d70e0e;
-            box-shadow: 0 0 10px #d70e0e;
+            color: #ff3333;
+            box-shadow: 0 0 10px #ff3333;
         }
         .event-options {
             margin-bottom: 15px;
@@ -75,17 +77,25 @@
             appearance: none;
             width: 20px;
             height: 20px;
-            border: 2px solid #d70e0e;
+            border: 2px solid #ff3333;
             border-radius: 50%;
             outline: none;
             cursor: pointer;
         }
         .event-option input[type="radio"]:checked {
-            background-color: #d70e0e;
-            box-shadow: 0 0 5px #d70e0e;
+            background-color: #ff3333;
+            box-shadow: 0 0 5px #ff3333;
         }
         .event-option label {
             cursor: pointer;
+        }
+        #cat-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -120,5 +130,62 @@
 
         <button type="submit">Submit RSVP</button>
     </form>
+    <div id="cat-container"></div>
+
+    <script>
+        // Three.js scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 200, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, 200);
+        document.getElementById('cat-container').appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(0, 1, 1);
+        scene.add(directionalLight);
+
+        // Load the cat model
+        const loader = new THREE.GLTFLoader();
+        let cat;
+        loader.load(
+            'blackcat1.glb', // Update this path
+            function (gltf) {
+                cat = gltf.scene;
+                cat.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
+                cat.position.set(0, -1, 0);
+                scene.add(cat);
+            },
+            undefined,
+            function (error) {
+                console.error('An error happened', error);
+            }
+        );
+
+        camera.position.z = 5;
+
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (cat) {
+                cat.rotation.y += 0.01; // Rotate the cat
+                cat.position.x = Math.sin(Date.now() * 0.001) * 3; // Move the cat left and right
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / 200;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, 200);
+        });
+    </script>
 </body>
 </html>
